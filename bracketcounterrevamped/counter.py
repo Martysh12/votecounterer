@@ -1,9 +1,12 @@
+from embeds import TextualStatsEmbed, TextualVotesEmbed
+
 import requests
 
 import nextcord
 from nextcord.ext import tasks, commands
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 import logging
 import os
 
@@ -15,11 +18,27 @@ class VoteCountingException(BaseException):
 class VoteCounter(commands.Cog):
     def __init__(self):
         self.stats = None
-        self.valid_letters = ['a', 'b', 'c', 'd', 'e']
+        self.valid_letters = ['a', 'b', 'c', 'd', 'e'] # TODO: Un-hardcode the letters
 
         logger.info("VoteCounter cog initialised.")
 
         self.count_votes.start()
+
+    @nextcord.slash_command(description="Send statistics as a textual embed", guild_ids=[835494729554460702])
+    async def stats_as_text(self, interaction: nextcord.Interaction):
+        if self.stats is None:
+            await interaction.send("Wait a little for the bot to finish counting bots.")
+            return
+
+        await interaction.send(embed=TextualStatsEmbed(self.stats))
+    
+    @nextcord.slash_command(description="Send votes as a textual embed", guild_ids=[835494729554460702])
+    async def votes_as_text(self, interaction: nextcord.Interaction):
+        if self.stats is None:
+            await interaction.send("Wait a little for the bot to finish counting bots.")
+            return
+
+        await interaction.send(embed=TextualVotesEmbed(self.stats))
 
     @tasks.loop(minutes=45.0)
     async def count_votes(self):
@@ -61,7 +80,6 @@ class VoteCounter(commands.Cog):
             'total_comments': 0,
             'vote_comments': 0,
             'non_vote_comments': 0,
-            'unique_voters': 0,
             'duplicate_comments': 0,
             'duplicate_commenters': 0,
             'most_prolific_duplicator': "",
@@ -69,7 +87,8 @@ class VoteCounter(commands.Cog):
             'votes': {
                 letter: 0
                 for letter in self.valid_letters
-            }
+            },
+            'counted_at': datetime.now(timezone.utc)
         }
 
         people_who_voted = [] # list of [channel_id, ...]
@@ -85,35 +104,35 @@ class VoteCounter(commands.Cog):
             vote_stats['total_comments'] += 1
 
             # Check if comment is a vote
+            voted_for = None
             is_vote = False
             for letter in self.valid_letters:
                 if f"[{letter}]" in comment_content.lower():
-                    vote_stats['vote_comments'] += 1
-                    vote_stats['votes'][letter] += 1
+                    # Catch these evil duplicators
+
+                    # Has channel voted before?
+                    #   Yes: Is channel in the duplicators list?
+                    #       Yes: Increase vote count by one.
+                    #       No: Create an entry with a vote count of 2.
+                    #   No: Add channel to the people who voted list.
+                    if channel_id in people_who_voted:
+                        vote_stats['duplicate_comments'] += 1
+
+                        if channel_id in duplicators:
+                            duplicators[channel_id]['votes'] += 1
+                        else:
+                            duplicators[channel_id] = {'name': channel_name, 'votes': 2}
+                    else:
+                        people_who_voted.append(channel_id)
+                        vote_stats['vote_comments'] += 1
+                        vote_stats['votes'][letter] += 1
+
                     is_vote = True
                     break
 
             if not is_vote:
                 vote_stats['non_vote_comments'] += 1
                 continue # Nothing to see here
-
-            # Duplicator-catching mechanism
-
-            # Has channel voted before?
-            #   Yes: Is channel in the duplicators list?
-            #       Yes: Increase vote count by one.
-            #       No: Create an entry with a vote count of 2.
-            #   No: Add channel to the people who voted list.
-
-            if channel_id in people_who_voted:
-                vote_stats['duplicate_comments'] += 1
-
-                if channel_id in duplicators:
-                    duplicators[channel_id]['votes'] += 1
-                else:
-                    duplicators[channel_id] = {'name': channel_name, 'votes': 2}
-            else:
-                people_who_voted.append(channel_id)
 
         # Count the duplicators (and the voters)
         vote_stats['unique_voters'] = len(people_who_voted)
