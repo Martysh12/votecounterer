@@ -1,3 +1,5 @@
+from counter import VoteCounter
+
 from dotenv import load_dotenv
 
 import nextcord
@@ -28,12 +30,11 @@ fh.setFormatter(fh_formatter)
 logger.addHandler(ch)
 logger.addHandler(fh)
 
-TESTING_GUILD_ID = 835494729554460702
-
 bot = commands.Bot()
 
 @bot.event
 async def on_ready():
     logger.info(f"Logged in as {bot.user}")
 
+bot.add_cog(VoteCounter())
 bot.run(os.getenv('DISCORD_TOKEN'))
