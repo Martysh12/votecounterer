@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 import nextcord
 
-from io import BytesIO
+import io
 
 SIZE = WIDTH, HEIGHT = 1280, 720
 
@@ -65,15 +65,16 @@ VOTE_COLOURS = (
 )
 
 def nextcordise(image, filename, desc, spoiler):
-    with io.BytesIO() as output:
-        image.save(output, format='PNG')
+    output = io.BytesIO()
+    image.save(output, format='PNG')
+    output.seek(0)
 
-        return nextcord.File(
-            fp=output,
-            filename=filename,
-            description=desc,
-            spoiler=spoiler
-        )
+    return nextcord.File(
+        fp=output,
+        filename=filename,
+        description=desc,
+        spoiler=spoiler
+    )
 
 def xywh_to_bbox(x, y, w, h):
     return (
@@ -545,6 +546,18 @@ def votes_graph(stats, sort=False):
         draw.rectangle(
             bar_bbox,
             fill=VOTE_COLOURS[i]
+        )
+
+        # Draw line
+        draw.line(
+            (
+                votebox_bbox[0] + bar_width * i,
+                votebox_bbox[3] - max_bar_height * percentage,
+                votebox_bbox[2],
+                votebox_bbox[3] - max_bar_height * percentage,
+            ),
+            fill=(64, 64, 64),
+            width=1
         )
 
         if percentage > 0.5:
