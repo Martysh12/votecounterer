@@ -62,6 +62,7 @@ class VoteCounter(commands.Cog):
             data = s.get('https://youtube.googleapis.com/youtube/v3/commentThreads', params=params).json()
 
             if 'error' in data:
+                logger.error(data["message"])
                 raise VoteCountingException(data["message"])
 
             comments += data['items']
@@ -118,7 +119,7 @@ class VoteCounter(commands.Cog):
 
             if channel_id in people_who_voted:
                 vote_stats['duplicate_comments'] += 1
-                
+
                 if channel_id in duplicators:
                     duplicators[channel_id]['votes'] += 1
                 else:
