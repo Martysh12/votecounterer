@@ -11,7 +11,7 @@ class GraphicalDataCog(commands.Cog):
     async def stats_as_graph(
         self,
         interaction: nextcord.Interaction,
-        bool = SlashOption(description="Spoiler the image", default=True)
+        spoiler: bool = nextcord.SlashOption(description="Spoiler the image", default=True)
     ):
         if self.vote_counter.stats is None:
             await interaction.send("Wait a little for the bot to finish counting bots.")
@@ -30,8 +30,8 @@ class GraphicalDataCog(commands.Cog):
     async def votes_as_graph(
         self,
         interaction: nextcord.Interaction,
-        sort: bool = SlashOption(description="Sort the bars", default=False),
-        spoiler: bool = SlashOption(description="Spoiler the image", default=True)
+        sort: bool = nextcord.SlashOption(description="Sort the bars", default=True),
+        spoiler: bool = nextcord.SlashOption(description="Spoiler the image", default=True)
     ):
         if self.vote_counter.stats is None:
             await interaction.send("Wait a little for the bot to finish counting bots.")
