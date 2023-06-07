@@ -108,31 +108,29 @@ class VoteCounter(commands.Cog):
             is_vote = False
             for letter in self.valid_letters:
                 if f"[{letter}]" in comment_content.lower():
-                    # Catch these evil duplicators
-
-                    # Has channel voted before?
-                    #   Yes: Is channel in the duplicators list?
-                    #       Yes: Increase vote count by one.
-                    #       No: Create an entry with a vote count of 2.
-                    #   No: Add channel to the people who voted list.
-                    if channel_id in people_who_voted:
-                        vote_stats['duplicate_comments'] += 1
-
-                        if channel_id in duplicators:
-                            duplicators[channel_id]['votes'] += 1
-                        else:
-                            duplicators[channel_id] = {'name': channel_name, 'votes': 2}
-                    else:
-                        people_who_voted.append(channel_id)
-                        vote_stats['vote_comments'] += 1
-                        vote_stats['votes'][letter] += 1
-
+                    voted_for = letter
                     is_vote = True
                     break
 
             if not is_vote:
                 vote_stats['non_vote_comments'] += 1
                 continue # Nothing to see here
+
+            if channel_id in people_who_voted:
+                vote_stats['duplicate_comments'] += 1
+                
+                if channel_id in duplicators:
+                    duplicators[channel_id]['votes'] += 1
+                else:
+                    duplicators[channel_id] = {
+                        'name': channel_name,
+                        'votes': 1 # This counts the number of duplicate votes, not the total amount of votes that person has cast
+                    }
+            else:
+                people_who_voted.append(channel_id)
+
+                vote_stats['vote_comments'] += 1
+                vote_stats['votes'][letter] += 1
 
         # Count the duplicators
         vote_stats['duplicate_commenters'] = len(duplicators)
