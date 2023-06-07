@@ -24,7 +24,7 @@ class VoteCounter(commands.Cog):
 
         self.count_votes.start()
 
-    @nextcord.slash_command(description="Send statistics as a textual embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send statistics as textual embed", guild_ids=[835494729554460702])
     async def stats_as_text(self, interaction: nextcord.Interaction):
         if self.stats is None:
             await interaction.send("Wait a little for the bot to finish counting bots.")
@@ -32,7 +32,7 @@ class VoteCounter(commands.Cog):
 
         await interaction.send(embed=TextualStatsEmbed(self.stats))
     
-    @nextcord.slash_command(description="Send votes as a textual embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send votes as textual embed", guild_ids=[835494729554460702])
     async def votes_as_text(self, interaction: nextcord.Interaction):
         if self.stats is None:
             await interaction.send("Wait a little for the bot to finish counting bots.")
@@ -134,14 +134,10 @@ class VoteCounter(commands.Cog):
                 vote_stats['non_vote_comments'] += 1
                 continue # Nothing to see here
 
-        # Count the duplicators (and the voters)
-        vote_stats['unique_voters'] = len(people_who_voted)
+        # Count the duplicators
         vote_stats['duplicate_commenters'] = len(duplicators)
-        vote_stats['duplicate_comments'] = 0
 
         for channel_id, data in duplicators.items():
-            vote_stats['duplicate_comments'] += data['votes']
-
             if data['votes'] > vote_stats['most_prolific_duplicator_votes']:
                 vote_stats['most_prolific_duplicator'] = data['name']
                 vote_stats['most_prolific_duplicator_votes'] = data['votes']
