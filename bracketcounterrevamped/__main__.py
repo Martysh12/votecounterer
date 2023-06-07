@@ -1,4 +1,5 @@
 from counter import VoteCounter
+from graph_cog import GraphicalDataCog
 
 from dotenv import load_dotenv
 
@@ -36,5 +37,9 @@ bot = commands.Bot()
 async def on_ready():
     logger.info(f"Logged in as {bot.user}")
 
-bot.add_cog(VoteCounter())
+vote_counter_cog = VoteCounter()
+graphical_data_cog = GraphicalDataCog(vote_counter_cog)
+
+bot.add_cog(vote_counter_cog)
+bot.add_cog(graphical_data_cog)
 bot.run(os.getenv('DISCORD_TOKEN'))
