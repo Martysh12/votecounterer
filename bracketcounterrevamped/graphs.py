@@ -316,6 +316,7 @@ def stats_graph(stats):
 
     # Draw textual data
     initial_pos = (pieslice_bbox[2] + GRAPH_MARGIN, pieslice_bbox[1])
+    line_number = 1
     
     # Total comments
     bbox = draw_text_segmented(
@@ -337,12 +338,14 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Vote comments
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 2
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
             {
@@ -374,12 +377,14 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Non-vote comments
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 3
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
             {
@@ -411,49 +416,56 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Late votes
-    draw_text_segmented(
-        draw,
-        (
-            initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 4
-        ),
-        [
-            {
-                'text': stats['late_votes'],
-                'font': FONT_DATA_BOLD,
-                'fill': PIE_COLOURS['late']
-            },
-            {
-                'text': " (about ",
-                'font': FONT_NORMAL
-            },
-            {
-                'text': str(round(stats['late_votes'] / stats['total_comments'] * 100, 1)) + "%",
-                'font': FONT_DATA_BOLD,
-                'fill': PIE_COLOURS['late']
-            },
-            {
-                'text': ") of them are ",
-                'font': FONT_NORMAL
-            },
-            {
-                'text': "late votes",
-                'font': FONT_NORMAL_BOLD
-            },
-            {
-                'text': ".",
-                'font': FONT_NORMAL
-            },
-        ]
-    )
+    if stats['late_votes'] > 0:
+        draw_text_segmented(
+            draw,
+            (
+                initial_pos[0],
+                initial_pos[1] + bbox[3] * 1.5 * line_number
+            ),
+            [
+                {
+                    'text': stats['late_votes'],
+                    'font': FONT_DATA_BOLD,
+                    'fill': PIE_COLOURS['late']
+                },
+                {
+                    'text': " (about ",
+                    'font': FONT_NORMAL
+                },
+                {
+                    'text': str(round(stats['late_votes'] / stats['total_comments'] * 100, 1)) + "%",
+                    'font': FONT_DATA_BOLD,
+                    'fill': PIE_COLOURS['late']
+                },
+                {
+                    'text': ") of them are ",
+                    'font': FONT_NORMAL
+                },
+                {
+                    'text': "late votes",
+                    'font': FONT_NORMAL_BOLD
+                },
+                {
+                    'text': ".",
+                    'font': FONT_NORMAL
+                },
+            ]
+        )
+
+        line_number += 1
+
+    line_number += 1
 
     # Duplicate votes
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 6
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
             {
@@ -485,12 +497,14 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Duplicate commenters
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 7
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
             {
@@ -513,12 +527,14 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Most prolific duplicator
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 8
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
 
@@ -537,12 +553,14 @@ def stats_graph(stats):
         ]
     )
 
+    line_number += 1
+
     # Most prolific duplicator votes
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 9
+            initial_pos[1] + bbox[3] * 1.5 * line_number
         ),
         [
 
