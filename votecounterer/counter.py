@@ -63,8 +63,8 @@ class VoteCounter(commands.Cog):
             data = s.get('https://youtube.googleapis.com/youtube/v3/commentThreads', params=params).json()
 
             if 'error' in data:
-                logger.error(data["message"])
-                raise VoteCountingException(data["message"])
+                logger.error(data['error']['message'])
+                raise VoteCountingException(data['error']['message'])
 
             comments += data['items']
 
