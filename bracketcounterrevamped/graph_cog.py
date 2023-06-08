@@ -7,7 +7,7 @@ class GraphicalDataCog(commands.Cog):
     def __init__(self, vote_counter_cog):
         self.vote_counter = vote_counter_cog
 
-    @nextcord.slash_command(description="Send statistics as graphical embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send statistics as graphical embed")
     async def stats_as_graph(
         self,
         interaction: nextcord.Interaction,
@@ -26,7 +26,7 @@ class GraphicalDataCog(commands.Cog):
             )
         )
     
-    @nextcord.slash_command(description="Send votes as graphical embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send votes as graphical embed")
     async def votes_as_graph(
         self,
         interaction: nextcord.Interaction,

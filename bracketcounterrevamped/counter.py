@@ -25,7 +25,7 @@ class VoteCounter(commands.Cog):
 
         self.count_votes.start()
 
-    @nextcord.slash_command(description="Send statistics as textual embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send statistics as textual embed")
     async def stats_as_text(self, interaction: nextcord.Interaction):
         if self.stats is None:
             await interaction.send("Wait a little for the bot to finish counting votes.")
@@ -33,7 +33,7 @@ class VoteCounter(commands.Cog):
 
         await interaction.send(embed=TextualStatsEmbed(self.stats))
     
-    @nextcord.slash_command(description="Send votes as textual embed", guild_ids=[835494729554460702])
+    @nextcord.slash_command(description="Send votes as textual embed")
     async def votes_as_text(self, interaction: nextcord.Interaction):
         if self.stats is None:
             await interaction.send("Wait a little for the bot to finish counting votes.")
