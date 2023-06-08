@@ -21,7 +21,7 @@ jobs:
         poetry-version: ${{ matrix.poetry-version }}
     - name: Install development dependencies
       run: |
-        poetry install --group=dev
+        poetry install --only=dev
     - name: Analyse the code with pylint
       run: |
         poetry run pylint votecounterer
