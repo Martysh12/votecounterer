@@ -18,19 +18,19 @@ FONT_TITLE_BOLD = ImageFont.truetype(
 )
 FONT_NORMAL = ImageFont.truetype(
     font="/usr/share/fonts/noto/NotoSans-Regular.ttf",
-    size=20
+    size=22
 )
 FONT_NORMAL_BOLD = ImageFont.truetype(
     font="/usr/share/fonts/noto/NotoSans-Bold.ttf",
-    size=20
+    size=22
 )
 FONT_DATA = ImageFont.truetype(
     font="/usr/share/fonts/noto/NotoSansMono-Regular.ttf",
-    size=20
+    size=22
 )
 FONT_DATA_BOLD = ImageFont.truetype(
     font="/usr/share/fonts/noto/NotoSansMono-Bold.ttf",
-    size=20
+    size=22
 )
 FONT_DATA_BIGGER = ImageFont.truetype(
     font="/usr/share/fonts/noto/NotoSansMono-Regular.ttf",
