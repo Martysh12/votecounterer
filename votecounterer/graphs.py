@@ -65,7 +65,7 @@ VOTE_COLOURS = (
     (24, 78, 119)
 )
 
-def nextcordise(image, filename, desc, spoiler):
+def nextcordise(image, filename, desc, spoiler=True):
     output = io.BytesIO()
     image.save(output, format='PNG')
     output.seek(0)
