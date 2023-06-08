@@ -5,6 +5,10 @@ on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.5.0"]
 
     steps:
       - name: Checkout repository
