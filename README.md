@@ -16,7 +16,7 @@ A Discord bot for counting votes for the OSO Discord server.
 DISCORD_TOKEN={your Discord bot token}
 YOUTUBE_API_KEY={your YouTube API key}
 ```
-2. That's it! Launch the bot with `poehttps://python-poetry.org/try run python -m votecounterer`
+2. That's it! Launch the bot with `poetry run python -m votecounterer`
 
 ## Contributing
 1. Fork the repository
