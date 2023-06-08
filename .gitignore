@@ -174,4 +174,6 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
-bracketcounterrevamped.sublime-workspace
+
+# Ignore Sublime Text 3 files
+*.sublime-workspace
