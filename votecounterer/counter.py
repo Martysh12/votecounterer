@@ -77,9 +77,9 @@ class VoteCounter(commands.Cog):
                 params=params,
             ).json()
 
-            if 'error' in data:
-                logger.error(data['error']['message'])
-                raise VoteCountingException(data['error']['message'])
+            if "error" in data:
+                logger.error(data["error"]["message"])
+                raise VoteCountingException(data["error"]["message"])
 
             comments += data["items"]
 
