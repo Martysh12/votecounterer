@@ -12,6 +12,7 @@ class TextualStatsEmbed(nextcord.Embed):
         self.add_field(name="Total comments", value=str(stats['total_comments']), inline=True)
         self.add_field(name="Vote comments", value=str(stats['vote_comments']), inline=True)
         self.add_field(name="Non-vote comments", value=str(stats['non_vote_comments']), inline=True)
+        self.add_field(name="Late votes", value=str(stats['late_votes']), inline=True)
         self.add_field(name="Duplicate votes", value=str(stats['duplicate_comments']), inline=False)
         self.add_field(name="Duplicate voters", value=str(stats['duplicate_commenters']), inline=True)
         self.add_field(
