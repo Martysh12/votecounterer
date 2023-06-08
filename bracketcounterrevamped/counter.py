@@ -19,6 +19,7 @@ class VoteCounter(commands.Cog):
     def __init__(self):
         self.stats = None
         self.valid_letters = ['a', 'b', 'c', 'd', 'e'] # TODO: Un-hardcode the letters
+        self.video_published_at = datetime.fromisoformat("2023-06-06T17:00:32Z")
 
         logger.info("VoteCounter cog initialised.")
 
@@ -85,6 +86,7 @@ class VoteCounter(commands.Cog):
             'duplicate_commenters': 0,
             'most_prolific_duplicator': "",
             'most_prolific_duplicator_votes': 0,
+            'late_votes': 0,
             'votes': {
                 letter: 0
                 for letter in self.valid_letters
@@ -95,6 +97,7 @@ class VoteCounter(commands.Cog):
         people_who_voted = [] # list of [channel_id, ...]
         duplicators = {} # dict of {channel_id: {'name':, 'votes':}}
         for comment in comments:
+
             # Thanks YouTube
             actual_comment = comment['snippet']['topLevelComment']['snippet']
 
@@ -116,6 +119,15 @@ class VoteCounter(commands.Cog):
             if not is_vote:
                 vote_stats['non_vote_comments'] += 1
                 continue # Nothing to see here
+
+            # From now on, the comment is 100% a vote
+
+            # Check if vote is late
+            how_late = datetime.fromisoformat(actual_comment['publishedAt']) - self.video_published_at
+
+            if how_late.days >= 2:
+                vote_stats['late_votes'] += 1
+                continue # Vote is late, therefore it's invalid
 
             if channel_id in people_who_voted:
                 vote_stats['duplicate_comments'] += 1
