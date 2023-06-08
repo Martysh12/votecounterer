@@ -46,9 +46,10 @@ TITLE_LOCATION = (25, 15)
 GRAPH_MARGIN = 50
 
 PIE_COLOURS = {
-    'vote': (1, 111, 186),
-    'nonvote': (255, 149, 5),
-    'duplicate': (236, 78, 32)
+    'vote': (0, 48, 73),
+    'nonvote': (247, 127, 0),
+    'duplicate': (214, 40, 40),
+    'late': (234, 226, 183)
 }
 
 VOTE_COLOURS = (
@@ -168,6 +169,7 @@ def stats_graph(stats):
         360 * (stats['vote_comments'] / stats['total_comments']),
         360 * (stats['non_vote_comments'] / stats['total_comments']),
         360 * (stats['duplicate_comments'] / stats['total_comments']),
+        360 * (stats['late_votes'] / stats['total_comments']),
     )
 
     # Draw comment pie
@@ -192,6 +194,13 @@ def stats_graph(stats):
         fill=PIE_COLOURS['duplicate']
     )
 
+    draw.pieslice(
+        pieslice_bbox,
+        angles[2] + angles[1],
+        angles[3] + angles[2] + angles[1],
+        fill=PIE_COLOURS['late']
+    )
+
     draw.ellipse(
         pieslice_bbox,
         width=4
@@ -201,7 +210,7 @@ def stats_graph(stats):
     legend_colour_bbox = FONT_DATA.getbbox("__")
     initial_pos = (
         pieslice_bbox[2] + GRAPH_MARGIN,
-        pieslice_bbox[3] - (legend_colour_bbox[3] * (1.5 * 3)) + (legend_colour_bbox[3] * 0.5)
+        pieslice_bbox[3] - (legend_colour_bbox[3] * (1.5 * 4)) + (legend_colour_bbox[3] * 0.5)
     )
 
     # Valid votes
@@ -274,6 +283,32 @@ def stats_graph(stats):
             },
             {
                 'text': "Duplicate votes",
+                'font': FONT_NORMAL
+            }
+        ]
+    )
+
+    # Late votes
+    draw_text_segmented(
+        draw,
+        (
+            initial_pos[0],
+            initial_pos[1] + bbox[3] * 1.5 * 3
+        ),
+        [
+            {
+                'text': "__",
+                'font': FONT_DATA,
+                'bg': PIE_COLOURS['late'],
+                'draw': False
+            },
+            {
+                'text': " ",
+                'font': FONT_DATA,
+                'draw': False
+            },
+            {
+                'text': "Late votes",
                 'font': FONT_NORMAL
             }
         ]
@@ -376,12 +411,49 @@ def stats_graph(stats):
         ]
     )
 
+    # Late votes
+    draw_text_segmented(
+        draw,
+        (
+            initial_pos[0],
+            initial_pos[1] + bbox[3] * 1.5 * 4
+        ),
+        [
+            {
+                'text': stats['late_votes'],
+                'font': FONT_DATA_BOLD,
+                'fill': PIE_COLOURS['late']
+            },
+            {
+                'text': " (about ",
+                'font': FONT_NORMAL
+            },
+            {
+                'text': str(round(stats['late_votes'] / stats['total_comments'] * 100, 1)) + "%",
+                'font': FONT_DATA_BOLD,
+                'fill': PIE_COLOURS['late']
+            },
+            {
+                'text': ") of them are ",
+                'font': FONT_NORMAL
+            },
+            {
+                'text': "late votes",
+                'font': FONT_NORMAL_BOLD
+            },
+            {
+                'text': ".",
+                'font': FONT_NORMAL
+            },
+        ]
+    )
+
     # Duplicate votes
     draw_text_segmented(
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 5
+            initial_pos[1] + bbox[3] * 1.5 * 6
         ),
         [
             {
@@ -418,7 +490,7 @@ def stats_graph(stats):
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 6
+            initial_pos[1] + bbox[3] * 1.5 * 7
         ),
         [
             {
@@ -446,7 +518,7 @@ def stats_graph(stats):
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 7
+            initial_pos[1] + bbox[3] * 1.5 * 8
         ),
         [
 
@@ -470,7 +542,7 @@ def stats_graph(stats):
         draw,
         (
             initial_pos[0],
-            initial_pos[1] + bbox[3] * 1.5 * 8
+            initial_pos[1] + bbox[3] * 1.5 * 9
         ),
         [
 
