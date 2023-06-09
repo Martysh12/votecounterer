@@ -11,7 +11,7 @@ from .embeds import TextualStatsEmbed, TextualVotesEmbed
 logger = logging.getLogger("votecounterer")
 
 
-class VoteCountingException(BaseException):
+class VoteCountingException(Exception):
     pass
 
 
@@ -31,6 +31,9 @@ class VoteCounter(commands.Cog):
 
         logger.info("VoteCounter cog initialised.")
 
+        self.count_votes.add_exception_type(
+            VoteCountingException, ConnectionError
+        )
         self.count_votes.start()  # pylint: disable=no-member
 
     @nextcord.slash_command(description="Send statistics as textual embed")
