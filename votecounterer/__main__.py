@@ -20,7 +20,9 @@ fh = logging.FileHandler("votecounterer.log")
 ch.setLevel(logging.DEBUG)
 fh.setLevel(logging.INFO)
 
-ch_formatter = logging.Formatter("%(levelname)-8s :: %(message)s")
+ch_formatter = logging.Formatter(
+    "%(asctime)-23s / %(levelname)-8s :: %(message)s"
+)
 fh_formatter = logging.Formatter(
     "%(name)s / %(asctime)-23s :: %(levelname)-8s :: %(message)s"
 )
