@@ -115,6 +115,10 @@ class VoteCounter(commands.Cog):
             # Thanks YouTube
             actual_comment = comment["snippet"]["topLevelComment"]["snippet"]
 
+            if "authorChannelId" not in actual_comment:
+                # Sometimes there's just no channel ID? Weird.
+                continue
+
             channel_name = actual_comment["authorDisplayName"]
             channel_id = actual_comment["authorChannelId"]["value"]
             comment_content = actual_comment["textOriginal"]
