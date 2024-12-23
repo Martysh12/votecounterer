@@ -8,30 +8,36 @@ from .embeds import DATETIME_FORMAT
 SIZE = WIDTH, HEIGHT = 1280, 720
 
 FONT_TITLE = ImageFont.truetype(
-    font="/usr/local/share/fonts/SegoeUI-VF/Segoe-UI-Variable-Static-Display.ttf",  # noqa: E501
+    font="fonts/giphurs/Giphurs-Medium.otf",  # noqa: E501
     size=36,
 )
 FONT_TITLE_BOLD = ImageFont.truetype(
-    font="/usr/local/share/fonts/SegoeUI-VF/Segoe-UI-Variable-Static-Display-Bold.ttf",  # noqa: E501
+    font="fonts/giphurs/Giphurs-Bold.otf",
     size=36,
 )
 FONT_NORMAL = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSans-Regular.ttf", size=22
+    font="fonts/giphurs/Giphurs-Regular.otf",
+    size=22,
 )
 FONT_NORMAL_BOLD = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSans-Bold.ttf", size=22
+    font="fonts/giphurs/Giphurs-Bold.otf",
+    size=22
 )
 FONT_DATA = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSansMono-Regular.ttf", size=22
+    font="fonts/robotomono/RobotoMono-Regular.ttf",
+    size=22
 )
 FONT_DATA_BOLD = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSansMono-Bold.ttf", size=22
+    font="fonts/robotomono/RobotoMono-Bold.ttf",
+    size=22
 )
 FONT_DATA_BIGGER = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSansMono-Regular.ttf", size=32
+    font="fonts/robotomono/RobotoMono-Regular.ttf",
+    size=32
 )
 FONT_DATA_BIGGER_BOLD = ImageFont.truetype(
-    font="/usr/share/fonts/noto/NotoSansMono-Bold.ttf", size=32
+    font="fonts/robotomono/RobotoMono-Bold.ttf",
+    size=32
 )
 
 TITLE_LOCATION = (25, 15)
