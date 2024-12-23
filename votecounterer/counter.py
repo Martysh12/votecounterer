@@ -26,7 +26,7 @@ class VoteCounter(commands.Cog):
             "e",
         ]  # TODO: Un-hardcode the letters
         self.video_published_at = datetime.fromisoformat(
-            "2023-06-06T17:00:32Z"
+            "2024-12-20T17:00:01Z"
         )
 
         logger.info("VoteCounter cog initialised.")
@@ -63,7 +63,7 @@ class VoteCounter(commands.Cog):
         params = {
             "key": os.getenv("YOUTUBE_API_KEY"),
             "part": "snippet",
-            "videoId": "jWZ6p_JeLyc",  # TODO: Un-hardcode the video ID
+            "videoId": "0g7dNvHirZQ",  # TODO: Un-hardcode the video ID
             "textFormat": "plainText",
             "maxResults": 100,
             "moderationStatus": "published",
